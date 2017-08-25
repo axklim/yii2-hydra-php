@@ -35,6 +35,9 @@ info "Install additional software"
 apt-get install -y php5.6 php5.6-curl php5.6-cli php5.6-intl php5.6-mysqlnd php5.6-gd php5.6-mbstring php5.6-xml
 apt-get install -y zip git
 
+info "Install composer"
+curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
+
 info "Configure PHP-ORACLE"
 apt-get install -y libaio1
 cp /app/vagrant/php_oracle/oci8.ini /etc/php/5.6/mods-available/
