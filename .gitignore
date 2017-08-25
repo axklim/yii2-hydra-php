@@ -1,5 +1,3 @@
-/userside.old
-
 # phpstorm project files
 .idea
 
@@ -30,3 +28,6 @@ phpunit.phar
 
 # vagrant runtime
 /.vagrant
+
+#my dev
+/dev
