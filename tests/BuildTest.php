@@ -21,4 +21,9 @@ class BuildTest extends TestCase
         $hydra->link($person, null);
         $this->assertEquals($hydra->getQuery(), $this->getTemplate('createPerson'));
     }
+
+    public function testFail()
+    {
+        $this->assertTrue(1 == 2);
+    }
 }
