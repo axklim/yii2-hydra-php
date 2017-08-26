@@ -12,14 +12,13 @@ class BuildTest extends TestCase
     {
         $hydra = new Builder();
         $person = new Person();
-        $person['MY_SURNAME'] = 'surname';
-        $person['MY_FIRST_NAME'] = 'name';
-        $person['MY_SECOND_NAME'] = 'name2';
-        $person['MY_COMMENT'] = 'comment';
-        $person['MY_REGION_ID'] = 9045576301;
-        $person['MY_FLAT'] = '5a';
+        $person['MY_SURNAME'] = $this->faker()->lastName;
+        $person['MY_FIRST_NAME'] = $this->faker()->firstName;
+        $person['MY_SECOND_NAME'] = $this->faker()->firstName;
+        $person['MY_COMMENT'] = $this->faker()->text;
+        $person['MY_REGION_ID'] = $this->faker()->randomNumber;
+        $person['MY_FLAT'] = $this->faker()->buildingNumber;
         $hydra->link($person, null);
         $this->assertEquals($hydra->getQuery(), $this->getTemplate('createPerson'));
-        $this->assertTrue(1 == 1);
     }
 }
