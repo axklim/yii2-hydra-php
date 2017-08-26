@@ -21,6 +21,11 @@
       "gudik\\hydraphp\\": "src/"
     }
   },
+  "autoload-dev": {
+    "psr-4": {
+      "gudik\\hydraphp\\tests\\": "tests/"
+    }
+  },
   "repositories": [
     {
       "type": "composer",

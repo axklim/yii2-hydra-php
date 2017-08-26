@@ -34,7 +34,7 @@ class Person extends BaseItem implements BaseItemInterface
             vch_VC_REM            => MY_COMMENT,
             num_N_SEX_ID          => SYS_CONTEXT('CONST', 'SEX_Male'),
             num_N_SUBJ_STATE_ID   => SYS_CONTEXT('CONST', 'SUBJ_STATE_On'));
-        
+
            -- добавление физ. лицу 'Фактического адреса';
           N_TMP1 := NULL;
           N_TMP2 := NULL;

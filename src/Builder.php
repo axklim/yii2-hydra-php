@@ -6,6 +6,7 @@ use gudik\hydraphp\items\BaseItemInterface;
 use PDO;
 use Yii;
 use yii\base\Exception;
+use yii\db\Command;
 
 /**
  * TODO: Проработать значения по умолчанию
@@ -28,17 +29,6 @@ class Builder
     private $items = [];
 
     private $iter = 1;
-    /**
-     * @var Connection
-     */
-    public $db;
-
-    public $rawSql;
-
-    public function __construct(Connection $connection)
-    {
-        $this->db = $connection;
-    }
 
     /**
      * @param BaseItemInterface $object
@@ -128,13 +118,10 @@ class Builder
         }
     }
 
-    public function execute($dump = 0)
+    public function build(Command $command)
     {
         $ar = [];
-        $command = $this->db->createPlSqlCommand2($this->getQuery());
-
         $command->bindValues($this->getValues());
-
         foreach ($this->getOuts() as $varName => $varType)
         {
             switch ($varType){
@@ -148,18 +135,12 @@ class Builder
                     throw new Exception('Не найден бинд для типа данных: ' . $varType);
             }
         }
-        $this->rawSql = $command->getRawSql();
-        if($dump){
-            var_dump($this->rawSql);
-        }
-        $command->execute();
         return $ar;
     }
 
     public function getQuery()
     {
-        $q = '-- Сгенерировано(' . date('Y-m-d H:i:s') . '): ' . PHP_EOL;
-        $q .= '-- ' . __METHOD__ . PHP_EOL;
+        $q = '-- BEGIN ' . __METHOD__ . PHP_EOL;
         $q .= 'DECLARE' . PHP_EOL;
         $q .= $this->getSqlDeclare() . PHP_EOL;
         $q .= 'BEGIN' . PHP_EOL;
@@ -168,6 +149,7 @@ class Builder
         $q .= $this->getSqlItems() . PHP_EOL;
         $q .= $this->getSqlReturnParams() . PHP_EOL;
         $q .= 'END;' . PHP_EOL;
+        $q .= '-- END ' . __METHOD__ . PHP_EOL;
         return $q;
     }
 
@@ -205,9 +187,7 @@ class Builder
         $q = '';
         foreach ($this->items as $item)
         {
-            $q .= '-- Сгенерировано: ' . PHP_EOL;
-            $q .= '-- ' . $item::className() . PHP_EOL;
-
+            $q .= '-- BEGIN ' . $item::className() . PHP_EOL;
             $q_item = $item->sql;
             foreach ($item->linkerIn as $varName => $varNameLinker){
                 $q_item = str_replace($varName, $varNameLinker, $q_item);
@@ -216,6 +196,7 @@ class Builder
                 $q_item = str_replace($varName, $varNameLinker, $q_item);
             }
             $q .= $q_item;
+            $q .= '-- END ' . $item::className() . PHP_EOL;
         }
         return $q;
     }
