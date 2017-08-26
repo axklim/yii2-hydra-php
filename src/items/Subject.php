@@ -25,7 +25,7 @@ class Subject extends BaseItem implements BaseItemInterface
             vch_VC_CODE           => MY_LOGIN,
             num_N_FIRM_ID         => 100,
             num_N_SUBJ_GROUP_ID   => 53640201);
-        
+
           --Привязка к фирме
           N_TMP1 := NULL;
           SI_SUBJECTS_PKG.SI_SUBJ_SUBJECTS_PUT(
