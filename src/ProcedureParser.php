@@ -9,7 +9,7 @@ class ProcedureParser
 
     public static function parse($package, $procedure)
     {
-        $file = __DIR__ . '/hydra/' . $package . '.pls';
+        $file = __DIR__ . '/hydra/packages/' . $package . '.pls';
         $file = file_get_contents($file);
         $matches = [];
         preg_match('/PROCEDURE ' . $procedure . '\((.*?)\)\;/s', $file, $matches);
