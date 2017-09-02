@@ -3,10 +3,10 @@
 namespace gudik\hydraphp;
 
 
-use yii\db\Command;
-use gudik\hydraphp\Connection;
+use gudik\hydraphp\db\Command;
+use gudik\hydraphp\db\Connection;
 
-class PDOHelper
+class OCIHelper
 {
     /** @var Connection $_connection */
     private $_connection;
@@ -26,17 +26,17 @@ class PDOHelper
 
     public function execute()
     {
-        return $this->setSql()->bindValues()->bindAuth()->_command->execute();
+        $this->setSql()->bindAuth()->bindValues()->_command->execute();
     }
 
     public function bindAuth()
     {
         $this->_command->bindValues([
-            'plIp' => $this->_connection->plIp,
-            'plUser' => $this->_connection->plUser,
-            'plPassword' => $this->_connection->plPassword,
-            'plCode' => $this->_connection->plCode,
-            'plApplicationId' => $this->_connection->plApplicationId,
+            ':plIp' => $this->_connection->plIp,
+            ':plUser' => $this->_connection->plUser,
+            ':plPassword' => $this->_connection->plPassword,
+            ':plCode' => $this->_connection->plCode,
+            ':plApplicationId' => $this->_connection->plApplicationId,
         ]);
         return $this;
     }
