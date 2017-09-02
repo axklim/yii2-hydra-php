@@ -14,7 +14,8 @@ class Procedure
         $this->package = $package;
         $this->procedure = $procedure;
         $this->_items = ProcedureParser::parse($package, $procedure);
-        array_walk($this->getRequiredItems(), function($item){
+        $requiredItems = $this->getRequiredItems();
+        array_walk($requiredItems, function($item){
             $this->__set($item['name'], null);
         });
     }
@@ -96,7 +97,8 @@ class Procedure
     public function getBinds()
     {
         $binds = [];
-        array_walk($this->getInParams(), function($param) use(&$binds){
+        $inParams = $this->getInParams();
+        array_walk($inParams, function($param) use(&$binds){
             /** @var Param $param */
             if(!$param->link){
                 $binds = [':' . $param->bind => $param->value] + $binds;

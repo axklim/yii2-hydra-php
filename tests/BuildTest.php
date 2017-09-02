@@ -48,7 +48,8 @@ class BuildTest extends TestCase
 
     public function _setBindPostfix(Builder $hydra, $postfix)
     {
-        array_walk_recursive($hydra->getParams(), function($param) use($postfix){
+        $param = $hydra->getParams();
+        array_walk_recursive($param, function($param) use($postfix){
             /** @var Param $param */
             $param->bind = $param->name . '_' . $postfix;
         });

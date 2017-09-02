@@ -44,7 +44,8 @@ class Builder
     public function declareSection()
     {
         $declare = [];
-        array_walk_recursive($this->getOutParams(), function($param) use(&$declare){
+        $outParams = $this->getOutParams();
+        array_walk_recursive($outParams, function($param) use(&$declare){
             /** @var Param $param */
             $declare[] = $param->sqlDeclare();
         });
