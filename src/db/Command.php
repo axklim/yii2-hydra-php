@@ -20,7 +20,7 @@ class Command
     {
         foreach ($params as $key => $value){
             $this->_binds[$key] = $value;
-            oci_bind_by_name($this->getStatement(), $key, $this->_binds[$key], 40);
+            oci_bind_by_name($this->getStatement(), $key, $this->_binds[$key]);
         }
         return $this;
     }
