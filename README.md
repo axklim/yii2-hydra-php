@@ -4,7 +4,7 @@ Simplest API for Latera Hydra Billing on PHP
 
 ### Install
 ```bash
-composer require gudik/yii2-hydraphp --dev
+composer require gudik/yii2-hydraphp
 ``` 
 
 ### Use
