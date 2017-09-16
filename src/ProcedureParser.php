@@ -7,9 +7,12 @@ class ProcedureParser
     CONST TYPE_VARCHAR = 'VARCHAR(512)';
     CONST TYPE_DATATIME = 'DATETIME';
 
-    public static function parse($package, $procedure)
+    public static function parse($package, $procedure, $packagesPath = null)
     {
         $file = __DIR__ . '/hydra/packages/' . $package . '.pls';
+        if($packagesPath){
+            $file = $packagesPath . '/' . $package . '.pls';
+        }
         $file = file_get_contents($file);
         $matches = [];
         preg_match('/PROCEDURE ' . $procedure . '\((.*?)\)\;/s', $file, $matches);

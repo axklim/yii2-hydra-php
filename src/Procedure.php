@@ -9,11 +9,11 @@ class Procedure
     public $procedure;
     public $params = [];
 
-    public function __construct($package, $procedure)
+    public function __construct($package, $procedure, $packagesPath = null)
     {
         $this->package = $package;
         $this->procedure = $procedure;
-        $this->_items = ProcedureParser::parse($package, $procedure);
+        $this->_items = ProcedureParser::parse($package, $procedure, $packagesPath);
         $requiredItems = $this->getRequiredItems();
         array_walk($requiredItems, function($item){
             $this->__set($item['name'], null);

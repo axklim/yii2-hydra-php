@@ -7,10 +7,10 @@ class Builder
 {
     private $_procedures = [];
 
-    public function create($procedure)
+    public function create($procedure, $packagesPath = null)
     {
         list($package, $procedure) = explode('.', $procedure);
-        $procedure = new Procedure($package, $procedure);
+        $procedure = new Procedure($package, $procedure, $packagesPath);
         $this->_procedures[] = $procedure;
         return $procedure;
     }
