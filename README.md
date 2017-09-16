@@ -7,6 +7,11 @@ Simplest API for Latera Hydra Billing on PHP
 composer require gudik/yii2-hydraphp
 ``` 
 
+### Test
+```bash
+vendor/bin/phpunit
+``` 
+
 ### Use
 Before use you will need to Packages: `SI_PERSONS_PKG.pls`, `SI_SUBJECTS_PKG.pls` and others.
 Can get them from Hydra database using Oracle sqlDeveloper and save to `./src/hydra/packages/`  
@@ -40,7 +45,7 @@ OCIHelper::create($connection, $hydra)->execute();
 ?>
 ```
 
-### Linking entities
+#### Linking entities
 ```php
     ...
     $faker = $this->faker();

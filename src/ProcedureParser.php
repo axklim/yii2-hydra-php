@@ -36,8 +36,9 @@ class ProcedureParser
         // required param
         strstr($str, ' := ') ? $ret['required'] = false : $ret['required'] = true;
 
-        $types = [ProcedureParser::TYPE_NUMBER => 'num_N_', ProcedureParser::TYPE_VARCHAR => 'vch_VC_', ProcedureParser::TYPE_DATATIME => 'dt_D_'];
-        foreach ($types as $type => $prefix){
+        $prefixes = self::hydraPrefixes();
+
+        foreach ($prefixes as $prefix => $type){
             $matches = [];
             if(strstr($str, $prefix) && preg_match('/'.$prefix.'(\w+)/', $str, $matches) ){
                 $ret['field'] = $matches[0];
@@ -47,5 +48,15 @@ class ProcedureParser
             }
         }
         return false;
+    }
+
+    private static function hydraPrefixes()
+    {
+        return [
+            'num_N_'    => ProcedureParser::TYPE_NUMBER,
+            'b_'        => ProcedureParser::TYPE_NUMBER,
+            'vch_VC_'   => ProcedureParser::TYPE_VARCHAR,
+            'dt_D_'     => ProcedureParser::TYPE_DATATIME,
+        ];
     }
 }
