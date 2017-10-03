@@ -29,7 +29,7 @@ class ProcedureParser
 
     public static function getType($str)
     {
-        if(strstr($str, ' IN OUT ')){
+        if(strstr($str, ' IN OUT ') || strstr($str, ' OUT ')){
             $ret['direction'] = 'OUT';
         }elseif (strstr($str, ' IN ')){
             $ret['direction'] = 'IN';
@@ -60,6 +60,7 @@ class ProcedureParser
             'b_'        => ProcedureParser::TYPE_NUMBER,
             'vch_VC_'   => ProcedureParser::TYPE_VARCHAR,
             'dt_D_'     => ProcedureParser::TYPE_DATATIME,
+            'ch_C_'     => ProcedureParser::TYPE_VARCHAR,
         ];
     }
 }
