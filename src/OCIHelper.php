@@ -5,6 +5,7 @@ namespace gudik\hydraphp;
 
 use gudik\hydraphp\db\Command;
 use gudik\hydraphp\db\Connection;
+use PDO;
 
 class OCIHelper
 {
@@ -15,18 +16,18 @@ class OCIHelper
     /** @var Command $_command */
     private $_command;
 
-    public static function create(Connection $connection, Builder $hydraphp, $command = null)
+    public static function create($connection, Builder $hydraphp, $command = null)
     {
         $helper = new self();
         $helper->_connection = $connection;
         $helper->_hydraphp = $hydraphp;
-        $helper->_command = $command ? $command : $helper->_connection->createCommand();
+        $helper->_command = $helper->_connection->createCommand();
         return $helper;
     }
 
     public function execute()
     {
-        $this->setSql()->bindAuth()->bindValues()->_command->execute();
+        $this->setSql()->bindAuth()->bindValues()->bindParams()->_command->execute();
     }
 
     public function bindAuth()
@@ -47,9 +48,23 @@ class OCIHelper
         return $this;
     }
 
+    public function bindParams()
+    {
+        foreach ($this->_hydraphp->getBindParams() as $bind => &$value)
+        {
+            $this->_command->bindParam(':'.$bind, $value,  PDO::PARAM_STR|PDO::PARAM_INPUT_OUTPUT, 512);
+        }
+        return $this;
+    }
+
     public function setSql()
     {
         $this->_command->setSql($this->_hydraphp->sql());
         return $this;
+    }
+
+    public function getCommand()
+    {
+        return $this->_command;
     }
 }

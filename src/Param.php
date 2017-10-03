@@ -11,6 +11,7 @@ class Param
 {
     public $name;
     public $bind;
+    public $bindParam;
     public $type;
     public $value;
     public $direction;
@@ -55,5 +56,10 @@ class Param
         }else{
             return $this->bind . ' ' . $this->type . ' := :' . $this->bind . ';';
         }
+    }
+
+    public function bind(&$value)
+    {
+        $this->bindParam = &$value;
     }
 }

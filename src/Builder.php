@@ -90,4 +90,21 @@ class Builder
             return ($procedure->getBinds());
         }, $this->_procedures), 'array_merge', []);
     }
+
+    /**
+     * Параметры которые возвращаем наружу
+     */
+    public function getBindParams()
+    {
+        $ar = [];
+        /** @var Procedure $procedure */
+        foreach ($this->_procedures as $procedure){
+            $bindParams = $procedure->getBindParams();
+            /** @var Param $bindParam */
+            foreach ($bindParams as $bindParam){
+                $ar[$bindParam->bind] = &$bindParam->bindParam;
+            }
+        }
+        return $ar;
+    }
 }

@@ -60,6 +60,11 @@ class Procedure
             return $param->sql();
         }, $this->params));
         $q .= ');' . PHP_EOL;
+
+        /** @var Param $param */
+        foreach ($this->getBindParams() as $param){
+            $q .= ':' . $param->bind . ':=' . $param->bind . ';' . PHP_EOL;
+        }
         return $q;
     }
 
@@ -105,5 +110,21 @@ class Procedure
             }
         });
         return $binds;
+    }
+
+    /**
+     * Забинденные параметры, которые возвращаем наружу
+     */
+    public function getBindParams()
+    {
+        return array_filter($this->params, function($param){
+            /** @var Param $param */
+            return !is_null($param->bindParam);
+        });
+    }
+
+    public function bindParam($paramName, &$value)
+    {
+        $this->$paramName()->bind($value);
     }
 }
