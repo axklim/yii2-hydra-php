@@ -60,6 +60,7 @@ class ProcedureParser
             'b_'        => ProcedureParser::TYPE_NUMBER,
             'vch_VC_'   => ProcedureParser::TYPE_VARCHAR,
             'dt_D_'     => ProcedureParser::TYPE_DATATIME,
+            'vch_C_'    => ProcedureParser::TYPE_VARCHAR,
             'ch_C_'     => ProcedureParser::TYPE_VARCHAR,
         ];
     }
